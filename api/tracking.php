@@ -26,30 +26,34 @@ if ($action === 'get_location') {
 if ($action === 'get_all_active') {
     $date = $_GET['date'] ?? date('Y-m-d');
     
-    // 1. Find all traveling buses from today's submissions
-    // We join with students to be sure we get the latest bus_number if for some reason it's missing in submissions
-    $stmt = $pdo->prepare("
-        SELECT DISTINCT COALESCE(ds.bus_number, s.bus_number) as bus_number
-        FROM daily_submissions ds
-        JOIN students s ON ds.student_id = s.id
-        WHERE ds.date = ? AND ds.traveling_bus = true
-        AND (ds.bus_number IS NOT NULL AND ds.bus_number != '' OR s.bus_number IS NOT NULL AND s.bus_number != '')
-    ");
-    $stmt->execute([$date]);
-    $busNumbers = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    // Show the full 116-bus list regardless of submissions
+    $busNumbers = [
+        'GJ18ZT2840', 'GJ18ZT2724', 'GJ18ZT2702', 'GJ18ZT2802', 'GJ18ZT2961', 'GJ18ZT2572', 
+        'GJ18ZT2521', 'GJ18ZT2978', 'GJ18ZT2909', 'GJ18ZT2808', 'GJ18ZT2561', 'GJ18ZT2860', 
+        'GJ18ZT2515', 'GJ18ZT2865', 'GJ18ZT2714', 'GJ18ZT2952', 'GJ18ZT2605', 'GJ18ZT2553', 
+        'GJ18ZT3481', 'GJ18ZT3272', 'GJ18ZT3439', 'GJ18ZT3038', 'GJ18ZT3482', 'GJ18ZT3285', 
+        'GJ18ZT3327', 'GJ18ZT3276', 'GJ18ZT3375', 'GJ18ZT3023', 'GJ18ZT2873', 'GJ18ZT2858', 
+        'GJ18ZT2712', 'GJ18ZT2522', 'GJ18ZT2907', 'GJ18ZT3013', 'GJ18ZT3154', 'GJ18ZT3112', 
+        'GJ18ZT3374', 'GJ18ZT3450', 'GJ18ZT3083', 'GJ18ZT3098', 'GJ18ZT3372', 'GJ18ZT3132', 
+        'GJ18ZT3440', 'GJ18ZT3133', 'GJ18ZT3269', 'GJ18ZT3331', 'GJ18ZT2912', 'GJ18ZT2683', 
+        'GJ18ZT2716', 'GJ18ZT2760', 'GJ18ZT2846', 'GJ18ZT2958', 'GJ18ZT2537', 'GJ18ZT2767', 
+        'GJ18ZT2842', 'GJ18ZT2578', 'GJ18ZT2946', 'GJ18ZT2581', 'GJ18ZT2823', 'GJ18ZT2780', 
+        'GJ18ZT2642', 'GJ18ZT2819', 'GJ18ZT2932', 'GJ18ZT2758', 'GJ18ZT2883', 'GJ18ZT2743', 
+        'GJ18ZT2677', 'GJ18ZT2638', 'GJ18ZT2571', 'GJ18ZT2900', 'GJ18ZT2610', 'GJ18ZT2985', 
+        'GJ18ZT2655', 'GJ18ZT2904', 'GJ18ZT2925', 'GJ18ZT2633', 'GJ18ZT2976', 'GJ18ZT2654', 
+        'GJ18ZT2676', 'GJ18ZT2934', 'GJ18ZT2536', 'GJ18ZT2783', 'GJ18ZT2755', 'GJ18ZT2644', 
+        'GJ18ZT2604', 'GJ18ZT2986', 'GJ18ZT2619', 'GJ18ZT2807', 'GJ18ZT2615', 'GJ18ZT2781', 
+        'GJ18ZT2975', 'GJ18ZT2691', 'GJ18ZT2814', 'GJ18ZT2988', 'GJ18ZT2508', 'GJ18ZT2706', 
+        'GJ18ZT2828', 'GJ18ZT2941', 'GJ18ZT2864', 'GJ18ZT2530', 'GJ18ZT2600', 'GJ18ZT2664', 
+        'GJ18ZT2773', 'GJ18ZT2973', 'GJ18ZT2570', 'GJ18ZT3407', 'GJ18ZT3458', 'GJ18ZT3174', 
+        'GJ18ZT3322', 'GJ18ZT3308', 'GJ18ZT3447'
+    ];
 
     if (empty($busNumbers)) {
         jsonResponse([]);
     }
 
-    $results = [];
-    foreach ($busNumbers as $busNo) {
-        $data = $amnex->getVehicleData($busNo);
-        if ($data && is_array($data) && count($data) > 0) {
-            // The API returns an array, we take the first element
-            $results[] = $data[0]; 
-        }
-    }
+    $results = $amnex->getMultipleVehicleData($busNumbers);
 
     jsonResponse($results);
 }

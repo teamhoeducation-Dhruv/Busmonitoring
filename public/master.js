@@ -648,10 +648,14 @@ async function trackAllBuses() {
     const trackingModal = document.getElementById('tracking-modal');
     const modalTitle = document.getElementById('modal-title');
     const trackingInfo = document.getElementById('tracking-info');
+    const busDistrictList = document.getElementById('bus-district-list');
     
     modalTitle.textContent = `All Active Buses - Live View`;
     trackingModal.style.display = 'block';
     trackingInfo.style.display = 'none';
+    if (busDistrictList) {
+        busDistrictList.innerHTML = '<div class="bus-selector-loading">Loading buses...</div>';
+    }
     
     const container = document.getElementById('map-container');
     container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; background:#f1f5f9; color:#64748b;">Scanning for all active buses...</div>';
@@ -662,6 +666,9 @@ async function trackAllBuses() {
         
         if (!response.ok || !Array.isArray(vehicles) || vehicles.length === 0) {
             container.innerHTML = `<div style="display:flex; align-items:center; justify-content:center; height:100%; background:#f1f5f9; color:#64748b;">No active buses found with GPS data for this date.</div>`;
+            if (busDistrictList) {
+                busDistrictList.innerHTML = '<div style="padding: 1rem; color: #64748b; text-align: center;">No bus data available.</div>';
+            }
             return;
         }
 
@@ -705,10 +712,99 @@ async function trackAllBuses() {
             map.fitBounds(bounds, { padding: [50, 50] });
         }
 
+        renderBusSelector(vehicles);
+
     } catch (e) {
         console.error("Global Tracking Error:", e);
         container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; background:#f1f5f9; color:#ef4444;">Failed to fetch fleet data.</div>';
     }
 }
+
+function renderBusSelector(vehicles) {
+    const busDistrictList = document.getElementById('bus-district-list');
+    const busSearchInput = document.getElementById('bus-search-input');
+    if (!busDistrictList || vehicles.length === 0) return;
+
+    // Group by depotname
+    const byDepot = vehicles.reduce((acc, v) => {
+        const depot = v.depotname || 'Unknown Depot';
+        if (!acc[depot]) acc[depot] = [];
+        acc[depot].push(v);
+        return acc;
+    }, {});
+
+    function renderList(searchQuery = '') {
+        busDistrictList.innerHTML = '';
+        let foundAny = false;
+
+        Object.keys(byDepot).sort().forEach(depot => {
+            let filteredBuses = byDepot[depot];
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filteredBuses = filteredBuses.filter(v => 
+                    (v.busNo && v.busNo.toLowerCase().includes(q)) || 
+                    (v.vehicleNo && v.vehicleNo.toLowerCase().includes(q))
+                );
+            }
+
+            if (filteredBuses.length > 0) {
+                foundAny = true;
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'bus-district-group';
+                
+                const header = document.createElement('div');
+                header.className = 'bus-district-name' + (searchQuery ? '' : ' collapsed');
+                header.innerHTML = `
+                    <span>${depot}</span>
+                    <span class="district-bus-count">${filteredBuses.length}</span>
+                    <span class="toggle-arrow">▼</span>
+                `;
+                
+                const listDiv = document.createElement('div');
+                listDiv.className = 'bus-numbers-list';
+                if (!searchQuery) {
+                    listDiv.classList.add('hidden');
+                }
+
+                header.onclick = () => {
+                    listDiv.classList.toggle('hidden');
+                    header.classList.toggle('collapsed');
+                };
+
+                filteredBuses.forEach(v => {
+                    const chip = document.createElement('div');
+                    chip.className = 'bus-chip';
+                    chip.innerHTML = `🚌 ${v.busNo || v.vehicleNo}`;
+                    chip.onclick = () => {
+                        window.trackIndividualBus(v.vehicleNo);
+                    };
+                    listDiv.appendChild(chip);
+                });
+
+                groupDiv.appendChild(header);
+                groupDiv.appendChild(listDiv);
+                busDistrictList.appendChild(groupDiv);
+            }
+        });
+
+        if (!foundAny) {
+            busDistrictList.innerHTML = '<div style="padding: 1rem; color: #64748b;">No buses found matching search.</div>';
+        }
+    }
+
+    // Initial render
+    renderList();
+
+    // Event listener for search
+    if (busSearchInput) {
+        const newSearchInput = busSearchInput.cloneNode(true);
+        busSearchInput.parentNode.replaceChild(newSearchInput, busSearchInput);
+        
+        newSearchInput.addEventListener('input', (e) => {
+            renderList(e.target.value);
+        });
+    }
+}
+
 
 checkAuthStatus();
