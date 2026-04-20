@@ -1,0 +1,90 @@
+### User Guide: Student Transportation Monitoring System (School Dashboard)
+
+**Welcome!**
+
+Welcome to the Student Transportation Monitoring System. This guide will walk you through how to use the School Dashboard to manage your students and submit your daily transportation reports. Your daily participation is crucial for ensuring student safety and accurate reporting.
+
+---
+
+#### 1. How to Log In
+
+Your login credentials are created and provided by the administrator.
+
+*   **Website:** [Enter the URL of your web app here, e.g., `https://your-project-name.web.app/school.html`]
+*   **Username:** Your username is an email address based on your school's official DIAS code (e.g., `YOUR_DIAS_CODE@cotd-survey-b19cf.firebaseapp.com`).
+*   **Password:** Use the password provided to you by the administrator.
+
+Upon logging in, you will be taken to your School Dashboard. Your school name and district will be displayed at the top.
+
+---
+
+#### 2. Understanding Your Dashboard
+
+The dashboard gives you a quick overview of your school's status for the current day.
+
+*   **Total Students:** The total number of students enrolled at your school who are registered for bus transport.
+*   **Submitted Today:** The number of students whose travel status you have already submitted for the day.
+*   **Pending Update:** The number of students whose status is still waiting to be submitted for the day. **Your goal each day is to make this number zero.**
+
+---
+
+#### 3. How to Submit the Daily Student Report (Your Main Daily Task)
+
+This is the most important task you will perform each day.
+
+1.  Scroll down to the **"Students to Update"** section. You will see a list of all students whose status is pending.
+2.  For each student, you will see their name and standard.
+3.  In each student's row, check one of the two boxes:
+    *   **Traveling:** Check this box if the student is using the bus today.
+    *   **Not Traveling:** Check this box if the student is absent or not using the bus today.
+4.  **(Optional)** If you need to add a specific note for a student (e.g., "Left early"), you can type it in the **Remarks** field in their row.
+5.  Once you have marked the status for all desired students, click the **"Submit Student Selections"** button at the bottom of the list.
+
+After you submit, the students will move from the "Students to Update" list to the **"Submitted Students"** list for that day.
+
+---
+
+#### 4. How to Manage Your Students
+
+You can add new students or update the information for existing ones at any time.
+
+##### A. Adding a New Student
+
+1.  Click on the **"Add New Student"** section. The title has a **`+`** next to it.
+2.  The section will expand to show a form.
+3.  Fill in the student's details:
+    *   Student Name
+    *   Education Level (e.g., Primary, Secondary)
+    *   Standard / Year
+    *   Bus Route information (if available)
+4.  Click the **"Save Student"** button. The new student will now be part of your school's roster.
+
+##### B. Editing or Deleting an Existing Student
+
+1.  Click on the **"Manage Enrolled Students"** section. The title has a **`+`** (or `-` if already open).
+2.  You will see a complete list of all your enrolled students.
+3.  To **Delete** a student who has left the school, find them in the list and click the red **"Delete"** button in their row.
+4.  To **Edit** a student's details (e.g., change their standard or bus number), click the blue **"Edit"** button. The row will become a form where you can make changes. Click the green **"Save"** button to confirm your changes.
+
+---
+
+#### 5. What to Do on a Holiday or Weekend (Daily Remark)
+
+If your school is closed for a holiday, weekend, or any other reason, you do not need to submit the status for every student individually. Instead, you should submit a daily remark.
+
+1.  Click on the **"Daily Remark for Non-Submission"** section.
+2.  In the **Reason** box, type the reason for not submitting (e.g., "Public Holiday," "Summer Vacation," "Weekend").
+3.  Click the **"Submit Remark"** button.
+
+This action informs the administration that your entire school has not submitted for a valid reason.
+
+---
+
+#### 6. How to Log Out
+
+When you are finished using the dashboard, it is important to log out to keep your school's information secure.
+
+*   Click the **"Logout"** button located at the top-right corner of the page.
+
+---
+This guide covers all the essential features of your School Dashboard. If you have any questions, please contact the administration.

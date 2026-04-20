@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Dashboard - COTD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="master.css">
+</head>
+<body>
+    <div class="app-header">
+        <img src="./Emblem.png" alt="Logo">
+        <div class="header-title">
+            <h1>Commissionerate of Tribal Development</h1>
+            <h2>Government of Gujarat</h2>
+        </div>
+    </div>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>Master Dashboard</h1>
+                <p>View student transportation data and daily remarks across all districts.</p>
+            </div>
+            <div class="header-right">
+                <div id="user-info-container">
+                    <span id="user-info"></span>
+                    <button id="logout-button" class="button-logout">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <p id="total-students">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Traveling by Bus</h3>
+                <p id="traveling-bus">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Not Traveling by Bus</h3>
+                <p id="not-traveling-bus">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Under Remark</h3>
+                <p id="students-under-remark">--</p>
+            </div>
+             <div class="stat-card">
+                <h3>Not Updated (Today)</h3>
+                <p id="not-updated">--</p>
+            </div>
+        </div>
+
+        <div class="table-container dashboard-card">
+            <div class="table-header">
+                <input type="text" id="search-input" class="search-input" placeholder="Search students...">
+                <input type="date" id="date-picker" class="date-picker">
+                <select id="district-filter" class="filter-select"></select>
+                <select id="school-filter" class="filter-select"></select>
+                <button id="download-daily-log" class="button-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download Log</button>
+            </div>
+            <table id="students-table">
+                <thead>
+                    <tr>
+                        <th>District</th>
+                        <th>School</th>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                        <th>Submission Date</th>
+                    </tr>
+                </thead>
+                <tbody id="students-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="collapsible-container dashboard-card">
+            <div id="performance-report-collapsible-button" class="collapsible-button" role="button" tabindex="0">
+                <span>School Performance Report</span>
+            </div>
+            <div id="performance-report-collapsible-content" class="collapsible-content" style="display: none;">
+                <div class="table-header">
+                    <label for="performance-start-date">From:</label>
+                    <input type="date" id="performance-start-date" class="date-picker">
+                    <label for="performance-end-date">To:</label>
+                    <input type="date" id="performance-end-date" class="date-picker">
+                    <button id="generate-performance-report" class="button-download">Generate Report</button>
+                    <button id="download-performance-report" class="button-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download Report</button>
+                </div>
+                <div class="table-container">
+                    <table id="performance-report-table">
+                        <thead>
+                            <tr>
+                                <th>District</th>
+                                <th>School Name</th>
+                                <th>Total Days</th>
+                                <th>Days Submitted</th>
+                                <th>Days Not Submitted</th>
+                                <th>Submission Rate</th>
+                                <th>Submitted with Remarks Only</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performance-report-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-container dashboard-card">
+             <div id="not-submitted-collapsible-button" class="collapsible-button" role="button" tabindex="0">
+                <span>View Not Submitted Schools</span>
+                <button id="download-not-submitted" class="button-download-small"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download List</button>
+            </div>
+            <div id="not-submitted-collapsible-content" class="collapsible-content" style="display: none;">
+                <div id="not-submitted-list" class="not-submitted-container">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-container dashboard-card">
+            <div id="district-summary-collapsible-button" class="collapsible-button" role="button" tabindex="0">
+                <span>District-wise Non-submission Report</span>
+                <button id="download-district-summary" class="button-download-small"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download</button>
+            </div>
+            <div id="district-summary-collapsible-content" class="collapsible-content" style="display: none;">
+                <div id="district-summary-list" class="not-submitted-container">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-container dashboard-card">
+            <div id="route-summary-collapsible-button" class="collapsible-button" role="button" tabindex="0">
+                <span>Route-wise Travel Log</span>
+                <button id="download-route-summary" class="button-download-small"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download</button>
+            </div>
+            <div id="route-summary-collapsible-content" class="collapsible-content" style="display: none;">
+                <div id="route-summary-list" class="not-submitted-container">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </div>
+
+        <div class="log-container">
+            <div id="daily-remarks-log-container" class="dashboard-card">
+                <div class="card-header">
+                    <h3>Daily Non-Submission Log</h3>
+                    <button id="download-daily-remarks" class="button-download-small"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download</button>
+                </div>
+                <div id="daily-remarks-log"></div>
+            </div>
+            
+            <div id="remarks-log-container" class="dashboard-card">
+                 <div class="card-header">
+                    <h3>Student-Specific Remarks Log</h3>
+                    <button id="download-student-remarks" class="button-download-small"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download</button>
+                </div>
+                <div id="remarks-log"></div>
+            </div>
+        </div>
+
+        <div class="collapsible-container dashboard-card">
+            <div id="collapsible-button" class="collapsible-button" role="button" tabindex="0">
+                 <span>View All Students & Schools</span>
+            </div>
+            <div id="collapsible-content" class="collapsible-content" style="display: none;">
+                 <div id="all-students-summary" class="remarks-summary">
+                    <div class="summary-item">
+                        <span>Total Students</span>
+                        <span id="all-students-total-students" class="summary-count">--</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Schools</span>
+                        <span id="all-students-total-schools" class="summary-count">--</span>
+                    </div>
+                </div>
+                 <div class="table-header">
+                    <select id="all-students-district-filter" class="filter-select"></select>
+                    <select id="all-students-school-filter" class="filter-select"></select>
+                    <button id="download-master-student-list" class="button-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download Student List</button>
+                    <button id="download-master-school-list" class="button-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download School List</button>
+                </div>
+                <div class="table-container">
+                    <table id="all-students-table">
+                        <thead>
+                            <tr>
+                                <th>District</th>
+                                <th>School</th>
+                                <th>Student Name</th>
+                                <th>Standard</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-students-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="index.js" type="module"></script>
+</body>
+</html>

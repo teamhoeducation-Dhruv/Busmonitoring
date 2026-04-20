@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Registration - CTD Gujarat</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Registration Page Specific "Wow" Aesthetics */
+        .registration-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .registration-page h1 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .registration-page p.subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 32px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .registration-page label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .registration-page .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .registration-page .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            background: #fff;
+        }
+
+        .registration-page .button-primary {
+            width: 100%;
+            padding: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 12px;
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+            margin-top: 10px;
+        }
+
+        .registration-page .button-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2);
+        }
+
+        .footer-links {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .footer-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Status indicators */
+        #registration-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+        .msg-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .msg-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    </style>
+    <link rel="icon" type="image/png" href="Emblem.png">
+</head>
+<body class="registration-page">
+    <div class="glass-card">
+        <h1>School Registration</h1>
+        <p class="subtitle">Create an account for your school or college</p>
+        
+        <form id="registration-form">
+            <div class="form-grid">
+                <!-- Registration Fields -->
+                <div class="form-group full-width">
+                    <label for="email">Official Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="school@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="district_id">District</label>
+                    <select id="district_id" class="form-control" required>
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="taluka_id">Taluka</label>
+                    <select id="taluka_id" class="form-control" required disabled>
+                        <option value="">Select Taluka</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="school_name">School / College Name</label>
+                    <input type="text" id="school_name" class="form-control" placeholder="Enter Full Name" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="dias_code">School DISE Code</label>
+                    <input type="text" id="dias_code" class="form-control" placeholder="Unique DISE Code" required>
+                </div>
+            </div>
+
+            <button type="submit" id="submit-btn" class="button-primary">Register School</button>
+            <div id="registration-message"></div>
+        </form>
+
+        <div class="footer-links">
+            Already have an account? <a href="login.html">Login here</a>
+        </div>
+    </div>
+
+    <script src="register.js" type="module"></script>
+</body>
+</html>

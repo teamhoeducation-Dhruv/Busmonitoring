@@ -1,0 +1,159 @@
+/* 
+  Consolidated and corrected styles for the District Dashboard page.
+*/
+
+/* Main layout container */
+main {
+    width: 100%;
+}
+
+/* Controls container for filters and search */
+.controls-container {
+    display: flex;
+    justify-content: flex-start; /* Aligns items to the left */
+    align-items: center;      /* Vertically centers items */
+    gap: 24px;                /* Space between filter and search */
+    padding: 20px 0;
+    width: 100%;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-container {
+    flex-grow: 1; /* Allows search to take available space */
+    max-width: 400px;
+}
+
+#search-input, #school-filter {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Card container for the student list */
+.dashboard-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+    margin-top: 20px;
+}
+
+.dashboard-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Table container with vertical scrolling */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+    max-height: 450px;  /* Sets a maximum height for the list */
+    overflow-y: auto;  /* Adds a vertical scrollbar when needed */
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.students-table th, .students-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.students-table thead th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    color: #333;
+    position: sticky; /* Makes the table header stick to the top during scroll */
+    top: 0;
+}
+
+/* Hides the first column (checkboxes) for a read-only view */
+.students-table th:first-child,
+.students-table td:first-child {
+    display: none;
+}
+
+/* --- Collapsible Section Styles --- */
+.collapsible-container {
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.collapsible-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.collapsible-button:hover {
+    background-color: #e9ecef;
+}
+
+.collapsible-button.active {
+    border-bottom: 1px solid #dee2e6;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.collapsible-content {
+    padding: 24px;
+    background-color: white;
+    display: none;
+}
+
+.collapsible-button .icon {
+    font-size: 1.8rem;
+    font-weight: 300;
+    transition: transform 0.3s ease-in-out;
+}
+
+.collapsible-button.active .icon {
+    transform: rotate(45deg);
+}
+
+/* --- Form Styles within Collapsible Sections --- */
+.collapsible-content .form-group {
+    margin-bottom: 1rem;
+}
+
+.collapsible-content input[type="text"], .collapsible-content select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.collapsible-content .button-primary {
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}

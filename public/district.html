@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>District Dashboard - COTD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="district.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="app-header">
+        <img src="./Emblem.png" alt="Logo">
+        <div class="header-title">
+            <h1>Commissionerate of Tribal Development</h1>
+            <h2>Government of Gujarat</h2>
+        </div>
+    </div>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>District Dashboard</h1>
+                <p>View student transportation data for your district.</p>
+            </div>
+            <div class="header-right">
+                <div id="user-info-container">
+                    <span id="user-info"></span>
+                    <button id="logout-button" class="button-logout">Logout</button>
+                </div>
+            </div>
+        </header>
+        <main>
+            <!-- Collapsible Add Student Section -->
+            <div class="collapsible-container dashboard-card">
+                <button id="add-student-button" class="collapsible-button">
+                    <span>Add New Student</span>
+                    <span class="icon">+</span>
+                </button>
+                <div id="add-student-form-container" class="collapsible-content" style="display: none;">
+                    <form id="add-student-form">
+                        <div class="form-group">
+                            <label for="student-school-selector">School</label>
+                            <select id="student-school-selector" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-name-input">Student Name</label>
+                            <input type="text" id="student-name-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-standard-input">Standard</label>
+                            <input type="text" id="student-standard-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-number-input">Bus Number</label>
+                            <input type="text" id="bus-number-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-pass-number-input">Bus Pass Number</label>
+                            <input type="text" id="bus-pass-number-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-time-morning-input">Bus Time (Morning)</label>
+                            <input type="text" id="bus-time-morning-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-time-evening-input">Bus Time (Evening)</label>
+                            <input type="text" id="bus-time-evening-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="route-input">Route</label>
+                            <input type="text" id="route-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="beneficiary-villages-input">Beneficiary Villages</label>
+                            <input type="text" id="beneficiary-villages-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="address-input">Address</label>
+                            <input type="text" id="address-input">
+                        </div>
+                        <button type="submit" class="button-primary">Save Student</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card"><h3>Total Students</h3><p id="total-students">-</p></div>
+                <div class="stat-card"><h3>Traveling by Bus</h3><p id="traveling-bus">-</p></div>
+                <div class="stat-card"><h3>Not Traveling by Bus</h3><p id="not-traveling-bus">-</p></div>
+                <div class="stat-card"><h3>Not Updated Today</h3><p id="not-updated">-</p></div>
+            </div>
+
+            <div class="controls-container">
+                <div class="filter-container">
+                    <label for="school-filter">Filter by School:</label>
+                    <select id="school-filter"></select>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search by student or school name...">
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Student List</h3>
+                <div class="table-container">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="select-all-checkbox"></th>
+                                <th>School</th>
+                                <th>Student Name</th>
+                                <th>Standard</th>
+                                <th>Route</th>
+                                <th>Beneficiary Villages</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Last Update</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <!-- Student rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="district.js"></script>
+</body>
+</html>

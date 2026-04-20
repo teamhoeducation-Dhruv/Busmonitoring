@@ -1,0 +1,149 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard - Student Transportation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="school.css">
+    <link rel="icon" type="image/png" href="Emblem.png">
+</head>
+<body>
+    <div class="app-header">
+        <img src="./Emblem.png" alt="Logo">
+        <div class="header-title">
+            <h1>Commissionerate of Tribal Development</h1>
+            <h2>Government of Gujarat</h2>
+        </div>
+    </div>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>School Dashboard</h1>
+                <div id="school-info" class="header-sub-info"></div>
+                 <div id="school-filter-container">
+                    <select id="school-selector" class="filter-select" style="display: none;"></select>
+                </div>
+            </div>
+            <div class="header-right">
+                <div id="user-info-container">
+                    <span id="user-info"></span>
+                    <button id="logout-button" class="button-logout">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <p id="total-students">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Submitted Today</h3>
+                <p id="submitted-today">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Update</h3>
+                <p id="pending-update">-</p>
+            </div>
+        </div>
+
+        <main>
+            <!-- Collapsible Add Student Section -->
+            <div class="collapsible-container dashboard-card">
+                <button id="add-student-button" class="collapsible-button">
+                    <span>Add New Student</span>
+                    <span class="icon">+</span>
+                </button>
+                <div id="add-student-form-container" class="collapsible-content" style="display: none;">
+                    <form id="add-student-form">
+                        <div class="form-group">
+                            <label for="student-name-input">Student Name</label>
+                            <input type="text" id="student-name-input" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="student-level-input">Education Level</label>
+                            <select id="student-level-input" required="">
+                                <option value="">Select Level</option>
+                                <option value="primary">Primary (1-8)</option>
+                                <option value="secondary">Secondary (9-10)</option>
+                                <option value="higher-secondary">Higher Secondary (11-12)</option>
+                                <option value="college">College (Year 1-4)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-standard-input">Standard / Year</label>
+                            <select id="student-standard-input" required="">
+                                <option value="">Select Level First</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-number-input">Bus Number</label>
+                            <input type="text" id="bus-number-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-pass-number-input">Bus Pass Number</label>
+                            <input type="text" id="bus-pass-number-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-time-morning-input">Bus Time (Morning)</label>
+                            <input type="text" id="bus-time-morning-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-time-evening-input">Bus Time (Evening)</label>
+                            <input type="text" id="bus-time-evening-input">
+                        </div>
+                        <button type="submit" class="button-primary">Save Student</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Collapsible Daily Remark Section -->
+            <div id="daily-remark-container" class="collapsible-container dashboard-card">
+                 <button class="collapsible-button">
+                    <span>Daily Remark for Non-Submission</span>
+                    <span class="icon">+</span>
+                </button>
+                 <div class="collapsible-content" style="display: none;">
+                    <p>If you are not submitting today, please provide a reason.</p>
+                    <form id="daily-remark-form">
+                        <div class="form-group">
+                            <label for="daily-remark-input">Reason</label>
+                            <input type="text" id="daily-remark-input" placeholder="e.g., Holiday, Weekend, etc.">
+                        </div>
+                        <button type="submit" class="button-primary">Submit Remark</button>
+                    </form>
+                </div>
+             </div>
+            
+            <!-- Collapsible Manage Enrolled Students Section -->
+            <div class="collapsible-container dashboard-card">
+                <button id="manage-students-button" class="collapsible-button expanded">
+                    <span>Manage Enrolled Students</span>
+                    <span class="icon">+</span>
+                </button>
+                <div id="manage-students-content" class="collapsible-content" style="display: block;">
+                    <p>Here you can view, edit, and remove enrolled students from your school.</p>
+                    <div id="enrolled-students-table-container" class="table-container">
+                        <!-- Student table will be rendered here by school.js -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="student-lists">
+                <div id="not-submitted-container" class="dashboard-card">
+                    <h3>Students to Update</h3>
+                    <p>Select the status for each student and click submit. Add optional remarks for individual students.</p>
+                    <div id="not-submitted-list"></div>
+                    <button id="submit-button" class="button-primary" style="display: none;">Submit Student Selections</button>
+                </div>
+        
+                <div id="submitted-container" class="dashboard-card">
+                    <h3>Submitted Students</h3>
+                    <div id="submitted-list"></div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+    <script src="school.js" type="module"></script>
+
+</body></html>

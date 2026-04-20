@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Run Deletion Script</title>
+</head>
+<body>
+    <h1>Deletion Script Runner</h1>
+    <p>This page is designed to run a specific data deletion script. Open the browser's developer console (usually by pressing F12) to see the script's output and progress.</p>
+    <p><strong>Warning:</strong> This script will permanently delete school and student data from the 'districts' collection for the following hardcoded DIAS codes: 24261304001, 24261302001, 24261413401.</p>
+    <p>A backup of your data has been created in the 'districts_backup' collection.</p>
+    <button id="run-script-button" style="background-color: #f44336; color: white; padding: 15px 25px; font-size: 16px; border: none; cursor: pointer;">Run Deletion Script</button>
+
+    <script type="module">
+        // The main deletion logic is in an external file to keep concerns separated.
+        import { deleteSpecificData } from './delete_by_dias_code.js';
+
+        // Add a click listener to the button.
+        document.getElementById('run-script-button').addEventListener('click', () => {
+            // Display a confirmation dialog to prevent accidental clicks.
+            if(confirm("Are you ABSOLUTELY SURE you want to permanently delete this data? This action cannot be undone.")) {
+                console.log("User confirmed. Running deletion script...");
+                // If confirmed, run the function.
+                deleteSpecificData();
+            } else {
+                console.log("User cancelled the operation.");
+            }
+        });
+    </script>
+</body>
+</html>
